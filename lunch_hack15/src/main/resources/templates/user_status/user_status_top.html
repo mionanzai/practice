@@ -1,0 +1,211 @@
+﻿<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+    <meta charset="UTF-8"/>
+    <title>ステータス一覧</title>
+
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+          th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap-theme.min.css}"/>
+</head>
+<body>
+<div class="container">
+    <h1>ステータス管理システム</h1>
+    <a href="http://localhost:8080/user_master">ユーザー/一覧へ</a>
+  
+
+
+
+
+    <div class="col-sm-12">
+
+        <form th:action="@{/user_status/create}" th:object="${lunchUserStatusForm}" class="form-horizontal" method="post">
+            <fieldset>
+            
+                <legend>ステータス新規情報作成</legend>
+
+          <div class="form-group" th:classappend="${#fields.hasErrors('date')}? 'has-error has-feedback'">
+
+                    <label for="date" class="col-sm-2 control-label">日付</label>
+
+<script>
+var hiduke=new Date(); 
+//年・月・日・曜日を取得する
+var year = hiduke.getFullYear();
+var month = hiduke.getMonth()+1;
+var day = hiduke.getDate();
+document.write(year+"年"+month+"月"+day+"日 ");
+</script>
+
+                    <div class="col-sm-10">
+
+                        
+
+                        <span th:if="${#fields.hasErrors('date')}" th:errors="*{date}"
+
+                              class="help-block">error!</span>
+
+                    </div>
+
+                </div>
+
+
+
+           
+
+ <div class="form-group" th:classappend="${#fields.hasErrors('start_time')}? 'has-error has-feedback'">
+                    <label for="start_time" class="col-sm-2 control-label">昼開始時間</label>
+                    <div class="col-sm-10">
+                    
+<select name="start_time" class="form-control">
+<option value="">選択してください</option>
+<option value="11:30:00">11:30</option>
+<option value="12:00:00">12:00</option>
+<option value="12:30:00">12:30</option>
+<option value="13:00:00">13:00</option>
+<option value="13:30:00">13:30</option>
+<option value="14:00:00">14:00</option>
+
+</select>
+                       
+                        <span th:if="${#fields.hasErrors('start_time')}" th:errors="*{start_time}"
+                              class="help-block">error!</span>
+                    </div>
+                </div>
+
+
+<div class="form-group" th:classappend="${#fields.hasErrors('end_time')}? 'has-error has-feedback'">
+                    <label for="end_time" class="col-sm-2 control-label">昼終了時間</label>
+
+
+                    <div class="col-sm-10">
+                    
+<select name="end_time" class="form-control">
+<option value="">選択してください</option>
+<option value="12:30:00">12:30</option>
+<option value="13:00:00">13:00</option>
+<option value="13:30:00">13:30</option>
+<option value="14:00:00">14:00</option>
+<option value="14:30:00">14:30</option>
+<option value="15:00:00">15:00</option>
+
+</select>
+                       
+                      
+                        <span th:if="${#fields.hasErrors('end_time')}" th:errors="*{end_time}"
+                              class="help-block">error!</span>
+                    </div>
+                </div>
+
+
+<div class="form-group" th:classappend="${#fields.hasErrors('lunch_flg')}? 'has-error has-feedback'">
+
+                    <label for="lunch_flg00" class="col-sm-2 control-label">行きたいかどうか</label>
+                    <div class="col-sm-10">
+                    
+                   
+<select name="lunch_flg" class="form-control">
+<option value="">選択してください</option>
+<option value="0">行きたくない！！=0</option>
+<option value="1">行きたい！=1</option>
+
+</select>
+                   
+                        <span th:if="${#fields.hasErrors('lunch_flg')}" th:errors="*{lunch_flg}"
+                              class="help-block">error!</span>
+                    </div>
+                </div>
+
+
+
+<div class="form-group" th:classappend="${#fields.hasErrors('id_user')}? 'has-error has-feedback'">
+
+                   
+                    <div class="col-sm-10">
+                   
+                        <input type="hidden" id="id_user" name="id_user" th:field="*{id_user}"
+                               class="form-control" value="0"/>
+                        <span th:if="${#fields.hasErrors('id_user')}" th:errors="*{id_user}"
+                              class="help-block">error!</span>
+                    </div>
+                </div>
+                
+                
+                <div class="form-group" th:classappend="${#fields.hasErrors('username')}? 'has-error has-feedback'">
+
+                    <label for="username" class="col-sm-2 control-label">ユーザー名</label>
+                    <div class="col-sm-10">
+                        <input type="text" id="username" name="username" th:field="*{username}"
+                               class="form-control" value="0"/>
+                        <span th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                              class="help-block">error!</span>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-primary">作成</button>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+
+        <hr/>
+        <table class="table table-striped table-bordered table-condensed">
+            <tr>
+             
+                <th>日付</th>
+                <th>昼開始時間</th>
+                <th>昼終了時間</th>
+                <th>行きたいかどうか</th>
+              
+                <th>ユーザー名</th>
+
+                <th colspan="2">編集</th>
+            </tr>
+
+            <tr th:each="user_status : ${user_status}">
+
+             
+                <td th:text="${user_status.date}">日付</td>
+
+                <td th:text="${user_status.start_time}">昼開始時間</td>
+
+                <td th:text="${user_status.end_time}">昼終了時間</td>
+
+                <td th:text="${user_status.lunch_flg}">行きたいかどうか</td>
+                
+  
+                <td th:text="${user_status.username}">ユーザー名</td>
+
+                <td>
+                    <form th:action="@{/user_status/edit}" method="get">
+                        <input class="btn btn-default" type="submit" name="form" value="編集"/>
+                        <input type="hidden" name="id_status" th:value="${user_status.id_status}"/>
+                    </form>
+                </td>
+
+                <td>
+                    <form th:action="@{/user_status/delete}" method="post">
+                        <input class="btn btn-danger" type="submit" value="削除"/>
+                        <input type="hidden" name="id_status" th:value="${user_status.id_status}"/>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"
+        th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+        th:src="@{/webjars/bootstrap/3.3.7/js/bootstrap.min.js}"></script>
+</body>
+</html>                    
+                
+                     
+                
+ 
